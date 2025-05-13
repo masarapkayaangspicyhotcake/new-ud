@@ -52,9 +52,13 @@ $admin_name = $fetch_profile ? htmlspecialchars($fetch_profile['firstname'] . ' 
     </div>
 
     <nav class="navbar">
+    <a href="../super_admin/superadmin_analytics.php">
+        <i class="fas fa-chart-line"></i> 
+        <span>Dashboard</span>
+    </a>
     <a href="../super_admin/superadmin_dashboard.php">
-        <i class="fas fa-home"></i> 
-        <span>Home</span>
+        <i class="fas fa-tools"></i> 
+        <span>Control Panel</span>
     </a>
     <a href="../superadmin_content/sa_add_posts.php">
         <i class="fas fa-pen"></i> 

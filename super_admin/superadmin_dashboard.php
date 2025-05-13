@@ -40,6 +40,73 @@ if (!$fetch_profile) {
     exit();
 }
 
+// NEW CODE: Fetch post analytics data - top posts by likes and comments
+$post_analytics = [];
+try {
+    $stmt = $conn->prepare("
+        SELECT p.post_id, p.title, 
+               COUNT(DISTINCT l.like_id) as like_count, 
+               COUNT(DISTINCT c.comment_id) as comment_count
+        FROM posts p
+        LEFT JOIN likes l ON p.post_id = l.post_id
+        LEFT JOIN comments c ON p.post_id = c.post_id
+        WHERE p.created_by = ? AND p.status = 'published'
+        GROUP BY p.post_id
+        ORDER BY (COUNT(DISTINCT l.like_id) + COUNT(DISTINCT c.comment_id)) DESC
+        LIMIT 5
+    ");
+    $stmt->execute([$admin_id]);
+    $post_analytics = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    // Handle error silently
+}
+
+// Prepare data for charts
+$post_titles = [];
+$post_likes = [];
+$post_comments = [];
+
+foreach ($post_analytics as $post) {
+    // Truncate long titles for better display
+    $post_titles[] = strlen($post['title']) > 20 ? substr($post['title'], 0, 20) . '...' : $post['title'];
+    $post_likes[] = $post['like_count'];
+    $post_comments[] = $post['comment_count'];
+}
+
+// Get monthly engagement data
+$monthly_likes = array_fill(0, 12, 0);
+$monthly_comments = array_fill(0, 12, 0);
+
+try {
+    // Monthly likes
+    $stmt = $conn->prepare("
+        SELECT MONTH(l.created_at) as month, COUNT(*) as count 
+        FROM likes l
+        JOIN posts p ON l.post_id = p.post_id
+        WHERE YEAR(l.created_at) = ? AND p.created_by = ?
+        GROUP BY MONTH(l.created_at)
+    ");
+    $stmt->execute([date('Y'), $admin_id]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $monthly_likes[$row['month']-1] = $row['count'];
+    }
+    
+    // Monthly comments
+    $stmt = $conn->prepare("
+        SELECT MONTH(c.created_at) as month, COUNT(*) as count 
+        FROM comments c
+        JOIN posts p ON c.post_id = p.post_id
+        WHERE YEAR(c.created_at) = ? AND p.created_by = ?
+        GROUP BY MONTH(c.created_at)
+    ");
+    $stmt->execute([date('Y'), $admin_id]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $monthly_comments[$row['month']-1] = $row['count'];
+    }
+} catch (PDOException $e) {
+    // Handle error silently
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +121,9 @@ if (!$fetch_profile) {
     <!-- Font Awesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <!-- Custom CSS File -->
     <link rel="stylesheet" href="../css/admin_style.css" />
 </head>
@@ -64,6 +134,7 @@ if (!$fetch_profile) {
 <?php include '../components/superadmin_header.php'; ?>
 
 <section class="dashboard">
+
 
     <h1 class="heading">Dashboard</h1>
 
@@ -299,7 +370,10 @@ if (!$fetch_profile) {
 
     </div>
 
+
 </section>
+
+
 
 <script src="../js/admin_script.js"></script>
 

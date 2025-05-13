@@ -30,7 +30,7 @@ $about_us = $about_query->fetch(PDO::FETCH_ASSOC);
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-section logo">
-            <img src="<?php echo htmlspecialchars($about_us['image'] ? '../uploads/' . $about_us['image'] : '../imgs/logo_trans.png'); ?>" alt="About Us Image" class="footer-logo">
+            <img src="<?php echo htmlspecialchars($about_us['image'] ? '../uploads/' . $about_us['image'] : 'imgs/logo_trans.png'); ?>" alt="About Us Image" class="footer-logo">
         </div>
         <div class="footer-section contact">
             <h4>Contact Us</h4>

@@ -68,7 +68,8 @@ $is_logged_in = isset($admin_id) && ($admin_role === 'superadmin' || $admin_role
    </div>
 
    <nav class="navbar">
-      <a href="../admin/dashboard.php"><i class="fas fa-home"></i> <span>Home</span></a>
+      <a href="../admin/dashboard.php"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a>
+      <a href="../admin/subadmin_analytics.php"><i class="fas fa-tools"></i> <span>Control Panel</span></a>
       <a href="../admin_content/add_posts.php"><i class="fas fa-pen"></i> <span>Manage Posts</span></a>
       <a href="../admin_content/view_posts.php"><i class="fas fa-eye"></i> <span>View Drafts</span></a>
       <a href="../admin_content/activity_log.php"><i class="fas fa-user"></i> <span>Activity Log</span></a>
