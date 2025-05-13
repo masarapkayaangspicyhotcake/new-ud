@@ -12,6 +12,15 @@ $conn = $db->connect();
 $account_id = $_SESSION['account_id'] ?? null;
 $user_name = $_SESSION['user_name'] ?? null;
 $user_role = $_SESSION['role'] ?? null;
+
+// Fetch "About Us" content from the database
+try {
+    $stmt = $conn->prepare("SELECT title, description, image FROM about_us ORDER BY about_id DESC LIMIT 1");
+    $stmt->execute();
+    $about_us = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error fetching About Us content: " . $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +71,8 @@ $user_role = $_SESSION['role'] ?? null;
             <img src="../imgs/logo.png" 
                  alt="The University Digest Logo" 
                  class="animated-logo">
-            <div class="logo"><h3>The University Digest</h3></div>
+            <div class="logo"><h3 class="about-title">
+            <?php echo htmlspecialchars($about_us['title'] ?? 'About The University Digest'); ?></h3></div>
         </a>
     </div>
 

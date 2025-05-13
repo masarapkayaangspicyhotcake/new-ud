@@ -202,7 +202,7 @@ if ($edit_id) {
                         <input type="hidden" name="about_id" value="<?= htmlspecialchars($edit_about['about_id'], ENT_QUOTES, 'UTF-8') ?>">
                         
                         <div class="form-group">
-                            <label for="edit_title">Title</label>
+                            <label for="edit_title">Title:</label>
                             <input type="text" id="edit_title" name="title" class="form-control" required value="<?= htmlspecialchars_decode($edit_about['title']) ?>">
                             </div>
 
