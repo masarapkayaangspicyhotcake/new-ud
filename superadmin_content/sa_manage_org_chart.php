@@ -183,8 +183,8 @@ try {
             <?php foreach ($org_members as $member): ?>
                 <div class="box">
                     <h3><?= htmlspecialchars($member['name']); ?></h3>
-                    <p><?= htmlspecialchars($member['position']); ?></p>
                     <p>Category: <?= htmlspecialchars($member['category_name'] ?? 'Uncategorized'); ?></p>
+                    <p>Position: <?= htmlspecialchars($member['position']); ?></p>
                     <?php if (!empty($member['image'])): ?>
                         <img src="../<?= htmlspecialchars($member['image']); ?>" alt="<?= htmlspecialchars($member['name']); ?>">
                     <?php endif; ?>
@@ -218,8 +218,8 @@ try {
             <?php foreach ($ended_members as $member): ?>
                 <div class="box">
                     <h3><?= htmlspecialchars($member['name']); ?></h3>
-                    <p><?= htmlspecialchars($member['position']); ?></p>
                     <p>Category: <?= htmlspecialchars($member['category_name'] ?? 'Uncategorized'); ?></p>
+                    <p>Position: <?= htmlspecialchars($member['position']); ?></p>
                     <?php if (!empty($member['image'])): ?>
                         <img src="../<?= htmlspecialchars($member['image']); ?>" alt="<?= htmlspecialchars($member['name']); ?>">
                     <?php endif; ?>

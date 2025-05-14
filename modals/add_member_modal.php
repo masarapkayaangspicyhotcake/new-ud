@@ -7,14 +7,15 @@
             <label for="name">Name:</label>
             <input type="text" name="name" id="name" required>
 
-            <label for="position">Position:</label>
-            <input type="text" name="position" id="position" required>
-
-            <label for="category_id">Category:</label>
+              <label for="category_id">Category:</label>
             <select name="category_id" id="category_id">
                 <option value="existing">Select existing category</option>
                 <!-- Dynamic categories will be loaded here -->
             </select>
+
+
+            <label for="position">Position:</label>
+            <input type="text" name="position" id="position" required>
 
             <label for="date_appointed">Date Appointed:</label>
             <input type="date" name="date_appointed" id="date_appointed" required />
@@ -36,14 +37,15 @@
     
     <label for="edit_name">Name:</label>
     <input type="text" id="edit_name" name="name">
-    
-    <label for="edit_position">Position:</label>
-    <input type="text" id="edit_position" name="position">
-    
+
     <label for="edit_category_id">Category:</label>
     <select id="edit_category_id" name="category_id">
         <!-- Options loaded dynamically -->
     </select>
+    
+    <label for="edit_position">Position:</label>
+    <input type="text" id="edit_position" name="position">
+    
     
     <label for="edit_date_appointed">Date Appointed:</label>
     <input type="date" id="edit_date_appointed" name="date_appointed">
@@ -62,4 +64,3 @@
 </form>
     </div>
 </div>
-
